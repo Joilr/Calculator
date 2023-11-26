@@ -29,6 +29,11 @@
   margin: 1rem;
   background-color: rgb(228, 235, 198);
 }
+.calculator-base .display-number-top, .calculator-base .display-number-bottom {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .calculator-base .display-number-top {
   display: flex;
   justify-content: flex-end;

@@ -1,6 +1,7 @@
 
 //Variables
 let firstNumber = null;
+let topDisplayFirstNumber = null;
 let secondNumber = null;
 let operator = null;
 
@@ -42,6 +43,8 @@ document.getElementById('operator-equals').addEventListener('click', function() 
         const result = myCalc(parseFloat(firstNumber), parseFloat(secondNumber), operator);
 
         //reset calculation
+
+        topDisplayFirstNumber = firstNumber;
         firstNumber = result;
         equals = true;
         updateDisplay(equals);
@@ -69,7 +72,7 @@ function myCalc(a, b, op) {
 function updateDisplay(equals) {
 
     if (equals) {
-    document.querySelector('.display-number-top').textContent = `${firstNumber} ${operator} ${secondNumber} =`;
+    document.querySelector('.display-number-top').textContent = `${topDisplayFirstNumber} ${operator} ${secondNumber} =`;
     document.querySelector('.display-number-bottom').textContent = firstNumber || "0";
     } else {
     document.querySelector('.display-number-top').textContent = `${firstNumber || ""} ${operator || ""} ${secondNumber || ""}`;
@@ -84,11 +87,12 @@ document.getElementById('clearButton').addEventListener('click', function() {
     firstNumber = null;
     secondNumber = null;
     operator = null;
-
+    topDisplayFirstNumber = null;
     updateDisplay();
 
 
 });
+
 
 
 

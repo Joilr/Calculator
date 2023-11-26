@@ -30,6 +30,12 @@
         margin: 1rem;
         background-color: rgb(228, 235, 198);
     } 
+
+    .display-number-top, .display-number-bottom {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
         .display-number-top{
             display: flex;
             justify-content: flex-end;
@@ -47,6 +53,9 @@
             font-size: 24px;
             font-weight: bold;
         }
+
+
+        
 
     .the-buttons{
         display: grid;
