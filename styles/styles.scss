@@ -8,7 +8,8 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-
+    background: radial-gradient(circle, #777676, #e4e0de);
+    
     .myCalc{
         display: flex;
         flex-direction: column;
@@ -18,6 +19,7 @@
         background-image: url('../images/leather.png');
         background-size: cover; /* Cover the entire element */
         background-repeat: no-repeat; /* Prevent the image from repeating */
+        box-shadow: 10px 8px 25px rgba(0, 0, 0, 0.4); // Adds shadow for 3D effect
     }
     
     .display{
