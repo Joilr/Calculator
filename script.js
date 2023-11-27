@@ -1,9 +1,13 @@
 
 //Variables
+let topDisplayNumber = null;
 let firstNumber = null;
-let topDisplayFirstNumber = null;
 let secondNumber = null;
 let operator = null;
+let equals = false;
+let operatorDirectCalculate = false;
+let newOperator = false;
+let finalizedSum = false;
 
 // Select all buttons with the class 'num'
 const numberButtons = document.querySelectorAll('.num');
@@ -12,14 +16,16 @@ const operatorButtons = document.querySelectorAll('.operator')
 // Number button click handling
 numberButtons.forEach(button => {
     button.addEventListener('click', function() {
-        if (operator === null) {
+        if (operator === null && finalizedSum == false) {
             // If operator is not chosen yet, build the firstNumber
             firstNumber = (firstNumber || "") + this.value;
-        } else {
+            updateDisplay();
+        } else if (finalizedSum == false) {
             // If operator is already chosen, build the secondNumber
             secondNumber = (secondNumber || "") + this.value;
+            updateDisplay();
         }
-        updateDisplay();
+        
     });
 });
 
@@ -28,31 +34,49 @@ numberButtons.forEach(button => {
 operatorButtons.forEach(button => {
     button.addEventListener('click', function() {
 
-        if (firstNumber !== null && secondNumber === null) {
-            operator = this.value;
+        finalizedSum = false;
+
+        if (firstNumber !== null && secondNumber !== null) {
+            console.log('Operator1');
+            operatorDirectCalculate = true;
+            newOperator = this.value;
+            document.getElementById('the-equals2').click();
         }
-        updateDisplay();
+
+       else if (firstNumber !== null && secondNumber === null) {
+            console.log('Operator2');
+            operator = this.value;
+            updateDisplay();
+        } 
     });
 });
 
 
 //Equals
-document.getElementById('operator-equals').addEventListener('click', function() {
+document.getElementById('the-equals2').addEventListener('click', function() {
 
-    if (secondNumber !== null) {
+    if (operatorDirectCalculate){
         const result = myCalc(parseFloat(firstNumber), parseFloat(secondNumber), operator);
 
-        //reset calculation
-
-        topDisplayFirstNumber = firstNumber;
+        console.log('Equals1');
         firstNumber = result;
-        equals = true;
-        updateDisplay(equals);
+        finalizedSum = true;
+        updateDisplay();
+        secondNumber = null;
+    }
+    
+    else if (secondNumber !== null) {
+        const result = myCalc(parseFloat(firstNumber), parseFloat(secondNumber), operator);
 
+        console.log('Equals2');
+
+        topDisplayNumber = firstNumber;
+        firstNumber = result;
+        finalizedSum = true;
+        equals = true;
+        updateDisplay();
         secondNumber = null;
         operator = null;
-
-
     }
 
 });
@@ -69,27 +93,46 @@ function myCalc(a, b, op) {
 }
 
 // Update display function
-function updateDisplay(equals) {
+function updateDisplay() {
 
-    if (equals) {
-    document.querySelector('.display-number-top').textContent = `${topDisplayFirstNumber} ${operator} ${secondNumber} =`;
-    document.querySelector('.display-number-bottom').textContent = firstNumber || "0";
-    } else {
-    document.querySelector('.display-number-top').textContent = `${firstNumber || ""} ${operator || ""} ${secondNumber || ""}`;
-    document.querySelector('.display-number-bottom').textContent = firstNumber || "0";
+    if (operatorDirectCalculate) {
+        console.log('Display1');
+        document.querySelector('.display-number-top').textContent = `${firstNumber} ${newOperator}`;
+        document.querySelector('.display-number-bottom').textContent = firstNumber;
+        operatorDirectCalculate = false;
+        operator = newOperator;
+        newOperator = false;
+        finalizedSum = false;
+        return;
     }
+    else if (equals) {
+        console.log('Display2');
+        document.querySelector('.display-number-top').textContent = `${topDisplayNumber || ""} ${operator || ""} ${secondNumber || ""} =`;
+        document.querySelector('.display-number-bottom').textContent = firstNumber || "0";
+        equals = false;
+        return;
+    } else {
+        console.log('Display3');
+        document.querySelector('.display-number-top').textContent = `${firstNumber || ""} ${operator || ""} ${secondNumber || ""}`;
+        document.querySelector('.display-number-bottom').textContent = firstNumber || "0";
+        return;
+}       
+
 }
 
 //reset button
 
 document.getElementById('clearButton').addEventListener('click', function() {
     
+    topDisplayNumber = null;
     firstNumber = null;
     secondNumber = null;
     operator = null;
-    topDisplayFirstNumber = null;
+    equals = false;
+    operatorDirectCalculate = false;
+    newOperator = false;
+    finalizedSum = false;
     updateDisplay();
-
 
 });
 
