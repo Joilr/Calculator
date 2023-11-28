@@ -113,8 +113,8 @@ function updateDisplay() {
         return;
     } else {
         console.log('Display3');
-        document.querySelector('.display-number-top').textContent = `${firstNumber || ""} ${operator || ""} ${secondNumber || ""}`;
-        document.querySelector('.display-number-bottom').textContent = firstNumber || "0";
+        document.querySelector('.display-number-top').textContent = ``;
+        document.querySelector('.display-number-bottom').textContent = `${firstNumber || ""} ${operator || ""} ${secondNumber || ""}`;
         return;
 }       
 
